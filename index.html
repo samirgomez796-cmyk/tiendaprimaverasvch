@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Primavera - Autoservicio de Barrio</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f3f6f4;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        /* HEADER REDISEÑADO */
+        header {
+            background: linear-gradient(135deg, #103820 0%, #1e5631 50%, #2e7d32 100%);
+            color: #ffffff;
+            padding: 1.2rem 1rem 1rem 1rem;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-bottom: 4px solid #81c784;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: #e8f5e9;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* MENÚ DE NAVEGACIÓN */
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.82rem;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        nav a:hover {
+            background-color: #ffffff;
+            color: #1b5e20;
+            border-color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 210px 20px 50px 20px;
+        }
+
+        /* TARJETAS / SECCIONES */
+        .pagina-seccion {
+            background: #ffffff;
+            margin-bottom: 35px;
+            padding: 32px;
+            border-radius: 16px;
+            border-left: 6px solid #2e7d32;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            scroll-margin-top: 220px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .pagina-seccion:hover {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .pagina-seccion h2 {
+            color: #1b5e20;
+            border-bottom: 2px solid #e8f5e9;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* CAJAS DE IMÁGENES Y MEDIA */
+        .caja-imagen, .caja-video {
+            background-color: #f4f8f5;
+            border: 2px dashed #a5d6a7;
+            padding: 12px;
+            text-align: center;
+            margin: 22px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .caja-imagen:hover {
+            border-color: #2e7d32;
+        }
+
+        .caja-imagen img, .caja-video video {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .caja-imagen img:hover {
+            transform: scale(1.015);
+        }
+
+        /* LISTAS CON ESTILO */
+        ul.lista-decorada, ol.lista-decorada {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        ul.lista-decorada li, ol.lista-decorada li {
+            background: #f8faf8;
+            margin-bottom: 10px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border-left: 4px solid #81c784;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        /* DISEÑADOR */
+        .perfil-disenador {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            align-items: center;
+            background: #f8faf8;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .foto-perfil {
+            width: 140px;
+            height: 140px;
+            background-color: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #2e7d32;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+            flex-shrink: 0;
+        }
+
+        /* PREGUNTAS FRECUENTES */
+        .faq-item {
+            background: #f8faf8;
+            padding: 15px 18px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #e8f5e9;
+        }
+
+        .faq-item strong {
+            color: #1b5e20;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.05rem;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #103820 0%, #1e5631 100%);
+            color: #ffffff;
+            font-size: 0.95rem;
+            border-top: 4px solid #81c784;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 6px 0;
+            color: #e8f5e9;
+        }
+
+        footer strong {
+            color: #ffffff;
+        }
+
+        /* ADAPTABILIDAD MÓVIL */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 0.5rem;
+            }
+
+            header h1 {
+                font-size: 1.6rem;
+            }
+
+            .container {
+                padding-top: 250px;
+            }
+
+            .pagina-seccion {
+                padding: 20px;
+            }
+
+            .perfil-disenador {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌸 Tienda Primavera</h1>
+        <p>Tu pequeño autoservicio de confianza</p>
+        <nav>
+            <ul>
+                <li><a href="#inicio">1. Inicio</a></li>
+                <li><a href="#nosotros">2. Nosotros</a></li>
+                <li><a href="#mision">3. Misión</a></li>
+                <li><a href="#vision">4. Visión</a></li>
+                <li><a href="#categorias">5. Categorías</a></li>
+                <li><a href="#autoservicio">6. Autoservicio</a></li>
+                <li><a href="#galeria">7. Galería</a></li>
+                <li><a href="#videos">8. Videos</a></li>
+                <li><a href="#ubicacion">9. Ubicación</a></li>
+                <li><a href="#contacto">10. Contacto</a></li>
+                <li><a href="#preguntas">11. Preguntas</a></li>
+                <li><a href="#disenador">12. Diseñador</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <section id="inicio" class="pagina-seccion">
+            <h2>🏠 Página 1: Inicio</h2>
+            <p><strong>¡Bienvenidos a Tienda Primavera!</strong> Somos un pequeño autoservicio de barrio atendido de manera cercana y cordial por su propia dueña. Ofrecemos una amplia variedad de productos para cubrir todas las necesidades diarias de tu hogar.</p>
+            <div class="caja-imagen">
+                <img src="img/Foto6.jpeg" alt="Fachada tienda primavera">
+            </div>
+        </section>
+
+        <section id="nosotros" class="pagina-seccion">
+            <h2>ℹ️ Página 2: Sobre Nosotros</h2>
+            <p>Tienda Primavera nació como un emprendimiento familiar ubicado en la propia casa de su fundadora. Nos caracterizamos por brindar una atención cálida, amable y personal a cada uno de nuestros vecinos y clientes.</p>
+            <br>
+            <p>Al ser un pequeño autoservicio, combinamos la comodidad de elegir libremente los productos directamente de las estanterías con la confianza y cercanía de un negocio de barrio.</p>
+            <div class="caja-imagen">
+                <img src="img/Foto7.jpeg" alt="Fachada tienda primavera">
+            </div>
+        </section>
+
+        <section id="mision" class="pagina-seccion">
+            <h2>🎯 Página 3: Nuestra Misión</h2>
+            <p><strong>Misión del Sitio Web:</strong> La misión principal al crear esta página web fue dar a conocer la Tienda Primavera en el entorno digital, otorgándole un espacio propio e informativo en internet para que la comunidad y los vecinos puedan saber quiénes somos, dónde encontrarnos y qué tipo de productos ofrecemos día a día.</p>
+        </section>
+
+        <section id="vision" class="pagina-seccion">
+            <h2>👁️ Página 4: Nuestra Visión</h2>
+            <p><strong>Visión con la Presencia Web:</strong> Nuestra visión ahora que la tienda cuenta con su propia página web es lograr que el negocio se haga más conocido en la zona, llegar a nuevos vecinos e incrementar la clientela, manteniendo siempre la calidez, confianza y cordialidad en el servicio presencial.</p>
+        </section>
+
+        <section id="categorias" class="pagina-seccion">
+            <h2>🛒 Página 5: Categorías de Productos</h2>
+            <p>Debido a que manejamos una gran diversidad de artículos y alta rotación, no contamos con catálogo fijo en línea. Sin embargo, en nuestras estanterías siempre encontrarás:</p>
+            <br>
+            <ul class="lista-decorada">
+                <li><strong>🌾 Abarrotes y Granos:</strong> Arroz, aceite, pastas, harinas, enlatados y condimentos.</li>
+                <li><strong>🥤 Bebidas y Refrescos:</strong> Gaseosas, cerveza, jugos, agua embotellada y lácteos.</li>
+                <li><strong>🍬 Golosinas y Mecatos:</strong> Galletas, chocolates, papas fritas y dulces.</li>
+                <li><strong>🧹 Aseo del Hogar y Personal:</strong> Jabones, detergentes, papel higiénico y limpieza en general.</li>
+                <li><strong>📦 Artículos Varios:</strong> Todo lo necesario para las cosas diarias del hogar.</li>
+            </ul>
+        </section>
+
+        <section id="autoservicio" class="pagina-seccion">
+            <h2>🛍️ Página 6: Cómo Comprar (Autoservicio)</h2>
+            <p>En Tienda Primavera tu compra es fácil y rápida:</p>
+            <br>
+            <ol class="lista-decorada">
+                <li>1. Ingresas al local y tomas tus productos directamente de los estantes.</li>
+                <li>2. Te diriges al punto de caja atendido personalmente por la Sra. dueña.</li>
+                <li>3. Realizas el pago de manera directa e instantánea.</li>
+            </ol>
+            <br>
+            <p><em>💡 <strong>Nota:</strong> Debido a que la tienda es atendida por una sola persona, no prestamos servicio de domicilios o envíos a distancia. ¡Te esperamos personalmente en nuestro local!</em></p>
+        </section>
+
+        <section id="galeria" class="pagina-seccion">
+            <h2>🖼️ Página 7: Galería de Fotos</h2>
+            <p>Conoce las instalaciones y la variedad de estantes que tenemos para ti:</p>
+            <div class="caja-imagen">
+                <img src="img/Foto1.jpeg" alt="Estante derecho de Tienda Primavera">
+            </div>
+            <div class="caja-imagen">
+                <img src="img/Foto3.jpeg" alt="Vitrina de Tienda Primavera">
+            </div>
+            <div class="caja-imagen">
+                <img src="img/Foto4.jpeg" alt="Refrigeradores Tienda Primavera">
+            </div>
+        </section>
+
+        <section id="videos" class="pagina-seccion">
+            <h2>🎥 Página 8: Videos del Local</h2>
+            <p>Mira los recorridos en video de nuestra tienda:</p>
+            <div class="caja-video">
+                <video controls src="mp4/Video Tienda Primavera.mp4" width="100%"></video>
+            </div>
+        </section>
+
+        <section id="ubicacion" class="pagina-seccion">
+            <h2>📍 Página 9: Ubicación y Horarios</h2>
+            <p><strong>Ubicación:</strong> Estamos ubicados en la misma casa de la dueña en la dirección local del barrio.</p>
+            <br>
+            <p><strong>⏰ Horarios de Atención:</strong></p>
+            <ul class="lista-decorada">
+                <li><strong>Lunes a Viernes:</strong> 6:00 AM - 9:00 PM</li>
+                <li><strong>Sábado:</strong> 6:00 AM - 6:00 PM</li>
+                <li><strong>Domingo:</strong> 6:00 AM - 9:00 PM</li>
+            </ul>
+        </section>
+
+        <section id="contacto" class="pagina-seccion">
+            <h2>📞 Página 10: Contacto Directo</h2>
+            <p>Si deseas realizar alguna consulta sobre la disponibilidad de un producto o nuestros horarios, puedes comunicarte directamente:</p>
+            <br>
+            <ul class="lista-decorada">
+                <li><strong>📱 Teléfono / WhatsApp:</strong> 3167903684</li>
+                <li><strong>👤 Atención:</strong> Directa por su propietaria.</li>
+            </ul>
+        </section>
+
+        <section id="preguntas" class="pagina-seccion">
+            <h2>❓ Página 11: Preguntas Frecuentes</h2>
+            
+            <div class="faq-item">
+                <strong>¿Tienen servicio de domicilio?</strong>
+                <p>No, la tienda es atendida únicamente por su dueña en el local comercial.</p>
+            </div>
+            
+            <div class="faq-item">
+                <strong>¿Puedo consultar precios por internet?</strong>
+                <p>Debido a la gran variedad de productos y rotación de marcas, no contamos con catálogo digital, pero te invitamos a visitarnos para conocer todos nuestros precios competitivos.</p>
+            </div>
+
+            <div class="faq-item">
+                <strong>¿Qué medios de pago aceptan?</strong>
+                <p>Aceptamos pago en efectivo y transferencias locales activas.</p>
+            </div>
+        </section>
+
+        <section id="disenador" class="pagina-seccion">
+            <h2>👨‍💻 Página 12: Diseñador del Sitio Web</h2>
+            <div class="perfil-disenador">
+                <div class="foto-perfil">
+                    <img src="img/Yo.jpg" alt="Samir Gómez Godoy" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div>
+                    <h3>Samir Gómez Godoy</h3>
+                    <p style="color: #2e7d32;"><strong>Diseñador y Desarrollador Web</strong></p>
+                    <br>
+                    <p>Página web diseñada y desarrollada especialmente para <strong>Tienda Primavera</strong>, creando un espacio estático, accesible y con presencia digital para promover los negocios locales de la comunidad.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 <strong>Tienda Primavera</strong> - Todos los derechos reservados.</p>
+        <p>Proyecto de Grado diseñado y desarrollado por <strong>Samir Gómez Godoy</strong></p>
+    </footer>
+
+</body>
+</html>
